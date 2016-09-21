@@ -35,8 +35,11 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
         Integer id = rs.getInt("id");
         String sisalto = rs.getString("sisalto");
+        String lahettaja = rs.getString("lahettaja");
+        Integer keskustelu_id = rs.getInt("keskustelu_id");
+        Integer aikaleima = rs.getInt("aikaleima");
 
-        Viesti o = new Viesti(id, sisalto);
+        Viesti o = new Viesti(id, sisalto, lahettaja, keskustelu_id, aikaleima);
 
         rs.close();
         stmt.close();
@@ -56,8 +59,11 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String sisalto = rs.getString("sisalto");
+            String lahettaja = rs.getString("lahettaja");
+            Integer keskustelu_id = rs.getInt("keskustelu_id");
+            Integer aikaleima = rs.getInt("aikaleima");
 
-            viestit.add(new Viesti(id, sisalto));
+            viestit.add(new Viesti(id, sisalto, lahettaja, keskustelu_id, aikaleima));
         }
 
         rs.close();
@@ -66,7 +72,7 @@ public class ViestiDao implements Dao<Viesti, Integer> {
 
         return viestit;
     }
-
+    
     @Override
     public void delete(Integer key) throws SQLException {
         // ei toteutettu
