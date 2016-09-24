@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Keskustelu</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../../styles.css" />
+        <link rel="stylesheet" href="../../bootstrap.min.css" />
+    </head>
+    <body>
+        <div class="page-header">
+            <h1>
+                 Aihe: <span th:text="${keskustelu.nimi}"></span>
+            </h1>
+        </div>
+        
+        <table class="table">
+            <tr th:each="viesti: ${keskustelu.viestit}">
+                <td>
+                    #<span th:text="${viesti.id}"></span>
+                </td>
+                <td>
+                    <b>Lähettäjä:</b> <br/>
+                    <span th:text="${viesti.lahettaja}"></span> <br/>
+                    <b>Aika:</b> <br/>
+                    <span th:text="${#dates.format(viesti.aikaleima, 'dd.MM.yyyy HH:mm')}"></span>
+                </td>
+                <td width="80%">
+                    <b>Viesti: </b> <br/>
+                    <span th:text="${viesti.sisalto}"></span> 
+                </td>
+            </tr>
+        </table>
+        <a th:href="${'/'}">
+           Näytä kaikki alueet
+       </a>
+    </body>
+</html>

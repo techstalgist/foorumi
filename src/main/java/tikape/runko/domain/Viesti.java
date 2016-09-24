@@ -1,12 +1,14 @@
 package tikape.runko.domain;
 
+import java.util.Date;
+
 public class Viesti {
 
     private Integer id;
     private String sisalto;
     private String lahettaja;
     private Integer keskustelu_id;
-    private Integer aikaleima;
+    private Date aikaleima;
 
     public Viesti(Integer id, String sisalto, String lahettaja, 
                   Integer keskustelu_id, Integer aikaleima) {
@@ -15,7 +17,7 @@ public class Viesti {
         this.sisalto = sisalto;
         this.lahettaja = lahettaja;
         this.keskustelu_id = keskustelu_id;
-        this.aikaleima = aikaleima;
+        this.aikaleima = new Date(aikaleima*1000L);
     }
 
     public Integer getId() {
@@ -42,7 +44,7 @@ public class Viesti {
         return keskustelu_id;
     }
     
-    public Integer getAikaleima() {
+    public Date getAikaleima() {
         return aikaleima;
     }
 }

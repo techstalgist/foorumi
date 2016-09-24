@@ -73,6 +73,33 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         return viestit;
     }
     
+    public List<Viesti> findForConversation(Integer conversation_id) throws SQLException {
+
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE keskustelu_id = ?");
+        stmt.setObject(1, conversation_id);
+
+        ResultSet rs = stmt.executeQuery();
+        List<Viesti> viestit = new ArrayList<>();
+        while (rs.next()) {
+            Integer id = rs.getInt("id");
+            String sisalto = rs.getString("sisalto");
+            String lahettaja = rs.getString("lahettaja");
+            Integer keskustelu_id = rs.getInt("keskustelu_id");
+            Integer aikaleima = rs.getInt("aikaleima");
+
+            viestit.add(new Viesti(id, sisalto, lahettaja, keskustelu_id, aikaleima));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return viestit;
+    }
+    
+ 
+    
     @Override
     public void delete(Integer key) throws SQLException {
         // ei toteutettu

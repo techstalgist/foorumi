@@ -2,15 +2,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <title>Otsikko</title>
+        <title>Foorumi</title>
         <meta charset="utf-8" />
+        <link rel="stylesheet" href="../../bootstrap.min.css" />
     </head>
 
     <body>
-        <h1>Heippa vaan!</h1>
+        <div class="page-header">
+            <h1>Tervetuloa keskustelufoorumille</h1>
+        </div>
 
-        <p>Ja .. <span th:text="${viesti}">jotain?</span></p>
+        <table class="table">
+            <tr>
+                <th>Alue</th>
+                <th>Viestit</th>
+                <th>Viimeisin viesti</th>
+            </tr>
+            <tr th:each="alue: ${alueet}">
+                <td>
+                    <a th:href="${'/alueet/' + alue.id}">
+                        <span th:text="${alue.nimi}"></span>
+                    </a>
+               </td>
+                <td th:text="${alue.viestienLukumaara}"></td>
+                <td th:text="${#dates.format(alue.viimeisin, 'dd.MM.yyyy HH:mm')}"></td>
+            </tr>
+        </table>
 
-        <p><a href="/viestit">Tästä viestilistaukseen.</a></p>
     </body>
 </html>
