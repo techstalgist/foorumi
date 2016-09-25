@@ -6,20 +6,32 @@
 package tikape.runko.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Keskustelu {
     
     private Integer id;
     private String nimi;
-    private Integer alue_id;
+    private Integer alueID;
+    private String alueenNimi;
     private List<Viesti> viestit;
+    private Integer viestienLukumaara;
+    private Date viimeisin;
     
-    public Keskustelu(Integer id, String nimi, Integer alue_id) {
+    public Keskustelu(Integer id, String nimi, Integer alueID, String alueenNimi) {
         this.id = id;
         this.nimi = nimi;
-        this.alue_id = alue_id;
+        this.alueID = alueID;
+        this.alueenNimi = alueenNimi;
         this.viestit = new ArrayList<>();
+    }
+    
+    public Keskustelu(Integer id, String nimi, Integer viestienLukumaara, Integer viimeisin) {
+        this.id = id;
+        this.nimi = nimi;
+        this.viestienLukumaara = viestienLukumaara;
+        this.viimeisin = new Date(viimeisin*1000L);
     }
     
     public void setViestit(List<Viesti> viestit) {
@@ -27,11 +39,12 @@ public class Keskustelu {
     }
 
     public List<Viesti> getViestit () {
+        int nro = 1;
+        for(Viesti viesti : viestit) {
+            viesti.setViestinNumero(nro);
+            nro++;
+        }
         return viestit;
-    }
-    
-    public Integer getViestienLkm() {
-        return viestit.size();
     }
     
     public Integer getId() {
@@ -46,8 +59,20 @@ public class Keskustelu {
         return nimi;
     }
     
-    public Integer getAlueId() {
-        return alue_id;
+    public Integer getAlueID() {
+        return alueID;
+    }
+    
+    public Integer getViestienLukumaara() {
+        return viestienLukumaara;
+    }
+    
+    public Date getViimeisin() {
+        return viimeisin;
+    }
+    
+    public String getAlueenNimi() {
+        return alueenNimi;
     }
     
 }

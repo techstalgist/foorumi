@@ -4,30 +4,43 @@
     <head>
         <title>Foorumi</title>
         <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="../../bootstrap.min.css" />
     </head>
 
     <body>
-        <div class="page-header">
-            <h1>Tervetuloa keskustelufoorumille</h1>
+        <div class="container">
+             <div class="row page-header">
+                    <div class="col-md-12">
+                      <h1>
+                         <h1>Tervetuloa keskustelufoorumille</h1>
+                     </h1>  
+                    </div>
+             </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                         <table class="table">
+                            <tr>
+                                <th>Alue</th>
+                                <th>Viestit</th>
+                                <th>Viimeisin viesti</th>
+                            </tr>
+                            <tr th:each="alue: ${alueet}">
+                                <td>
+                                    <a th:href="${'/alueet/' + alue.id}">
+                                        <span th:text="${alue.nimi}"></span>
+                                    </a>
+                               </td>
+                                <td th:text="${alue.viestienLukumaara}"></td>
+                                <td th:text="${#dates.format(alue.viimeisin, 'dd.MM.yyyy HH:mm')}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
         </div>
-
-        <table class="table">
-            <tr>
-                <th>Alue</th>
-                <th>Viestit</th>
-                <th>Viimeisin viesti</th>
-            </tr>
-            <tr th:each="alue: ${alueet}">
-                <td>
-                    <a th:href="${'/alueet/' + alue.id}">
-                        <span th:text="${alue.nimi}"></span>
-                    </a>
-               </td>
-                <td th:text="${alue.viestienLukumaara}"></td>
-                <td th:text="${#dates.format(alue.viimeisin, 'dd.MM.yyyy HH:mm')}"></td>
-            </tr>
-        </table>
-
+       
+      
     </body>
 </html>

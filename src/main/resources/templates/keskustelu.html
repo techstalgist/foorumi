@@ -7,37 +7,56 @@ and open the template in the editor.
 <html>
     <head>
         <title>Keskustelu</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="../../styles.css" />
         <link rel="stylesheet" href="../../bootstrap.min.css" />
     </head>
     <body>
-        <div class="page-header">
-            <h1>
-                 Aihe: <span th:text="${keskustelu.nimi}"></span>
-            </h1>
+        <div class="container">
+            <div class="row page-header">
+               <div class="col-md-12">
+                 <h1>
+                    Aihe: <span th:text="${keskustelu.nimi}"></span>
+                </h1>  
+               </div>
+           </div>
+
+            <div class="row margin">
+               <div class="col-md-2">
+                   <a th:href="${'/'}">
+                         Näytä kaikki alueet
+                   </a>
+               </div>
+                <div class="col-md-2">
+                    <a th:href="${'/alueet/' + keskustelu.alueID}">
+                      <span th:text="${keskustelu.alueenNimi}"></span>
+                    </a>
+               </div>
+           </div>
+            <div class="row">
+                <div class="col-md-12">
+                      <table class="table">
+                        <tr th:each="viesti: ${keskustelu.viestit}">
+                            <td>
+                                #<span th:text="${viesti.viestinNumero}"></span>
+                            </td>
+                            <td>
+                                <b>Lähettäjä:</b> <br/>
+                                <span th:text="${viesti.lahettaja}"></span> <br/>
+                                <b>Aika:</b> <br/>
+                                <span th:text="${#dates.format(viesti.aikaleima, 'dd.MM.yyyy HH:mm')}"></span>
+                            </td>
+                            <td width="80%">
+                                <b>Viesti: </b> <br/>
+                                <span th:text="${viesti.sisalto}"></span> 
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
-        
-        <table class="table">
-            <tr th:each="viesti: ${keskustelu.viestit}">
-                <td>
-                    #<span th:text="${viesti.id}"></span>
-                </td>
-                <td>
-                    <b>Lähettäjä:</b> <br/>
-                    <span th:text="${viesti.lahettaja}"></span> <br/>
-                    <b>Aika:</b> <br/>
-                    <span th:text="${#dates.format(viesti.aikaleima, 'dd.MM.yyyy HH:mm')}"></span>
-                </td>
-                <td width="80%">
-                    <b>Viesti: </b> <br/>
-                    <span th:text="${viesti.sisalto}"></span> 
-                </td>
-            </tr>
-        </table>
-        <a th:href="${'/'}">
-           Näytä kaikki alueet
-       </a>
+       
     </body>
 </html>

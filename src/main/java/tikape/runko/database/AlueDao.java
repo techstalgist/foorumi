@@ -20,14 +20,35 @@ import tikape.runko.domain.Alue;
 public class AlueDao implements Dao<Alue, Integer> {
     
     private Database database;
+    private KeskusteluDao keskusteluDao;
 
-    public AlueDao(Database database) {
+    public AlueDao(Database database, KeskusteluDao keskusteluDao) {
         this.database = database;
+        this.keskusteluDao = keskusteluDao;
     }
 
     @Override
     public Alue findOne(Integer key) throws SQLException {
-        return null;
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Alue WHERE id = ?");
+        stmt.setObject(1, key);
+
+        ResultSet rs = stmt.executeQuery();
+        boolean hasOne = rs.next();
+        if (!hasOne) {
+            return null;
+        }
+
+        Integer id = rs.getInt("id");
+        String nimi = rs.getString("nimi");
+
+        Alue a = new Alue(id, nimi);
+        a.setKeskustelut(keskusteluDao.findForSection(id));
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return a;
     }
 
         

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Alue</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="../../styles.css" />
+        <link rel="stylesheet" href="../../bootstrap.min.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="row page-header">
+                <div class="col-md-12">
+                  <h1>
+                     Alue: <span th:text="${alue.nimi}"></span>
+                 </h1>  
+                </div>
+          </div>
+            <div class="row margin">
+                <div class="col-md-2">
+                    <a th:href="${'/'}">
+                          Näytä kaikki alueet
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                   <table class="table">
+                        <tr>
+                            <th>Keskustelut</th>
+                            <th>Viestit</th>
+                            <th>Viimeisin viesti</th>
+                        </tr>
+                        <tr th:each="keskustelu: ${alue.keskustelut}">
+                            <td>
+                                <a th:href="${'/keskustelut/' + keskustelu.id}">
+                                    <span th:text="${keskustelu.nimi}"></span>
+                                </a>
+                           </td>
+                            <td th:text="${keskustelu.viestienLukumaara}"></td>
+                            <td th:text="${#dates.format(keskustelu.viimeisin, 'dd.MM.yyyy HH:mm')}"></td>
+                        </tr>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

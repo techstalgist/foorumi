@@ -5,7 +5,9 @@
  */
 package tikape.runko.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Alue {
     
@@ -13,12 +15,23 @@ public class Alue {
     private String nimi;
     private Integer viestienLukumaara;
     private Date viimeisin;
+    private List<Keskustelu> keskustelut;
     
     public Alue(Integer id, String nimi, Integer viestienLukumaara, Integer viimeisin) {
         this.id = id;
         this.nimi = nimi;
         this.viestienLukumaara = viestienLukumaara;
         this.viimeisin = new Date(viimeisin*1000L);
+    }
+    
+    public Alue(Integer id, String nimi) {
+        this.id = id;
+        this.nimi = nimi;
+        this.keskustelut = new ArrayList<>();
+    }
+    
+    public void setKeskustelut(List<Keskustelu> keskustelut) {
+        this.keskustelut = keskustelut;
     }
     
     public Integer getId() {
@@ -44,4 +57,10 @@ public class Alue {
     public Date getViimeisin() {
         return viimeisin;
     }
+    
+    public List<Keskustelu> getKeskustelut() {
+        return keskustelut;
+    }
+
+    
 }

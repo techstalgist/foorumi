@@ -9,6 +9,7 @@ public class Viesti {
     private String lahettaja;
     private Integer keskustelu_id;
     private Date aikaleima;
+    private Integer viestinNumero;
 
     public Viesti(Integer id, String sisalto, String lahettaja, 
                   Integer keskustelu_id, Integer aikaleima) {
@@ -27,6 +28,15 @@ public class Viesti {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    public void setViestinNumero(Integer nro) {
+        this.viestinNumero = nro;
+    }
+    
+    public Integer getViestinNumero() {
+        return viestinNumero;
+    }
+
 
     public String getSisalto() {
         return sisalto;

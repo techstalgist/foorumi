@@ -1,5 +1,5 @@
 package tikape.runko;
-
+//
 
 import java.util.HashMap;
 import spark.ModelAndView;
@@ -17,9 +17,9 @@ public class Main {
         Database database = new Database("jdbc:sqlite:foorumi.db");
         database.init();
 
-        AlueDao alueDao = new AlueDao(database);
         ViestiDao viestiDao = new ViestiDao(database);
         KeskusteluDao keskusteluDao = new KeskusteluDao(database, viestiDao);
+        AlueDao alueDao = new AlueDao(database, keskusteluDao);
         
         staticFileLocation("/public");
         
@@ -29,6 +29,13 @@ public class Main {
             map.put("alueet", alueDao.findAll());
 
             return new ModelAndView(map, "index");
+        }, new ThymeleafTemplateEngine());
+        
+        get("/alueet/:id", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("alue", alueDao.findOne(Integer.parseInt(req.params("id"))));
+
+            return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
 
         get("/keskustelut/:id", (req, res) -> {
