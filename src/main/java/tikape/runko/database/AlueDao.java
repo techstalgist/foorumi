@@ -59,13 +59,13 @@ public class AlueDao implements Dao<Alue, Integer> {
         PreparedStatement stmt = connection.prepareStatement("SELECT \n" +
         "a.id, \n" +
         "a.nimi,\n" +
-        "COUNT(*) as lkm,\n" +
-        "MAX(aikaleima) as viimeisin\n" +
-        "FROM Viesti v\n" +
-        "INNER JOIN Keskustelu k \n" +
-        "ON v.keskustelu_id = k.id\n" +
-        "INNER JOIN Alue a\n" +
+        "COUNT(v.id) as lkm,\n" +
+        "MAX(v.aikaleima) as viimeisin\n" +
+        "FROM Alue a\n" +
+        "LEFT JOIN Keskustelu k \n" +
         "ON k.alue_id = a.id\n" +
+        "LEFT JOIN Viesti v\n" +
+        "ON v.keskustelu_id = k.id\n" +
         "GROUP BY a.id\n" +
         "ORDER BY a.nimi ASC");
 
