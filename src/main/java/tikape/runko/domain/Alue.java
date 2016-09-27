@@ -21,7 +21,9 @@ public class Alue {
         this.id = id;
         this.nimi = nimi;
         this.viestienLukumaara = viestienLukumaara;
-        this.viimeisin = new Date(viimeisin*1000L);
+        if (viimeisin > 0) {
+            this.viimeisin = new Date(viimeisin*1000L);
+        }
     }
     
     public Alue(Integer id, String nimi) {

@@ -34,7 +34,7 @@
                                     </a>
                                </td>
                                 <td th:text="${alue.viestienLukumaara}"></td>
-                                <td th:text="${#dates.format(alue.viimeisin, 'dd.MM.yyyy HH:mm')}"></td>
+                                <td th:text="${alue.viimeisin != null} ? ${#dates.format(alue.viimeisin, 'dd.MM.yyyy HH:mm')}"></td>
                             </tr>
                         </table>
                     </div>
