@@ -121,5 +121,10 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     @Override
     public void delete(Integer key) throws SQLException {
     }
+
+    @Override
+    public Integer createOne(Keskustelu obj) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

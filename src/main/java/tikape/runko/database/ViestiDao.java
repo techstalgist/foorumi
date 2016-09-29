@@ -105,4 +105,9 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         // ei toteutettu
     }
 
+    @Override
+    public Integer createOne(Viesti obj) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

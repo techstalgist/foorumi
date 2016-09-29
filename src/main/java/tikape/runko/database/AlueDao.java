@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Alue;
@@ -89,6 +90,27 @@ public class AlueDao implements Dao<Alue, Integer> {
 
     @Override
     public void delete(Integer key) throws SQLException {
+    }
+
+    @Override
+    public Integer createOne(Alue alue) throws SQLException {
+        Connection connection = database.getConnection();
+        Statement stmt = connection.createStatement();
+        
+        String uudenNimi = alue.getNimi();
+        StringBuilder sb = new StringBuilder();
+        sb.append("INSERT INTO Alue (nimi) VALUES (\"");
+        sb.append(uudenNimi);
+        sb.append("\");");
+        
+        stmt.executeUpdate(sb.toString());
+        
+        int id = stmt.getGeneratedKeys().getInt(1);
+        
+        stmt.close();
+        connection.close();
+        
+        return id;
     }
     
 }

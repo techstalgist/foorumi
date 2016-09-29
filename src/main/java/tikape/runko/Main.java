@@ -9,6 +9,7 @@ import tikape.runko.database.AlueDao;
 import tikape.runko.database.Database;
 import tikape.runko.database.KeskusteluDao;
 import tikape.runko.database.ViestiDao;
+import tikape.runko.domain.Alue;
 
 
 public class Main {
@@ -37,7 +38,32 @@ public class Main {
 
             return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
+        
+        get("/uusialue", (req, res) -> {
+            HashMap map = new HashMap<>();
+            
+            return new ModelAndView(map, "uusiAlue");
+        }, new ThymeleafTemplateEngine());
 
+               
+        post("/uusialue", (req, res) -> {
+            
+            String nimi = req.queryParams("nimi");
+            
+            if (nimi.length()== 0) {
+                HashMap map = new HashMap<>();
+                return new ModelAndView(map, "uusiAlue");
+            }
+          
+            Alue uusiAlue = new Alue(nimi);
+            int uudenId = alueDao.createOne(uusiAlue);
+            
+            HashMap map = new HashMap<>();
+            map.put("alue", alueDao.findOne(uudenId));
+
+            return new ModelAndView(map, "alue");
+        }, new ThymeleafTemplateEngine());
+        
         get("/keskustelut/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("keskustelu", keskusteluDao.findOne(Integer.parseInt(req.params("id"))));

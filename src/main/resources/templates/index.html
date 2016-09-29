@@ -37,6 +37,10 @@
                                 <td th:text="${alue.viimeisin != null} ? ${#dates.format(alue.viimeisin, 'dd.MM.yyyy HH:mm')}"></td>
                             </tr>
                         </table>
+                        
+                         <a th:href="${'/uusialue'}">
+                          Luo uusi keskustelualue
+                    </a>
                     </div>
                 </div>
         </div>

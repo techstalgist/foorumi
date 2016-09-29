@@ -32,6 +32,10 @@ public class Alue {
         this.keskustelut = new ArrayList<>();
     }
     
+    public Alue(String nimi) {
+        this.nimi = nimi;
+    }
+    
     public void setKeskustelut(List<Keskustelu> keskustelut) {
         this.keskustelut = keskustelut;
     }
