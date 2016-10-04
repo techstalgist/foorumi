@@ -39,7 +39,7 @@ public class AlueDao implements Dao<Alue, Integer> {
         if (!hasOne) {
             return null;
         }
-
+        
         Integer id = rs.getInt("id");
         String nimi = rs.getString("nimi");
 
@@ -95,16 +95,12 @@ public class AlueDao implements Dao<Alue, Integer> {
     @Override
     public Integer createOne(Alue alue) throws SQLException {
         Connection connection = database.getConnection();
-        Statement stmt = connection.createStatement();
-        
-        String uudenNimi = alue.getNimi();
-        StringBuilder sb = new StringBuilder();
-        sb.append("INSERT INTO Alue (nimi) VALUES (\"");
-        sb.append(uudenNimi);
-        sb.append("\");");
-        
-        stmt.executeUpdate(sb.toString());
-        
+   
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Alue (nimi) VALUES (?)");
+        stmt.setObject(1, alue.getNimi());
+    
+        stmt.execute();
+                
         int id = stmt.getGeneratedKeys().getInt(1);
         
         stmt.close();

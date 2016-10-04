@@ -95,7 +95,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         "ON k.alue_id = a.id\n" +
         "WHERE \n" +
         "a.id = ?\n" +
-        "GROUP BY v.keskustelu_id\n" +
+        "GROUP BY k.id\n" +
         "ORDER BY viimeisin DESC\n" +
         "LIMIT 10;");
         stmt.setObject(1, alue);
