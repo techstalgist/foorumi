@@ -97,16 +97,15 @@ public class AlueDao implements Dao<Alue, Integer> {
     public Integer createOne(Alue alue) throws SQLException {
         Connection connection = database.getConnection();
    
-        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Alue (nimi) VALUES (?)");
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Alue (nimi) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
         stmt.setObject(1, alue.getNimi());
     
         stmt.execute();
                 
         ResultSet rs = stmt.getGeneratedKeys();
         rs.next();
-        
-        int id = rs.getInt(1);
-        
+        int id = rs.getInt(1); 
+   
         stmt.close();
         connection.close();
         
