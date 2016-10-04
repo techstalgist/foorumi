@@ -1,5 +1,4 @@
 package tikape.runko;
-//
 
 import java.util.HashMap;
 import spark.ModelAndView;
@@ -15,21 +14,16 @@ import tikape.runko.domain.Alue;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+       
+        initialize();
         
-         // asetetaan portti jos heroku antaa PORT-ympäristömuuttujan
-        if (System.getenv("PORT") != null) {
-            port(Integer.valueOf(System.getenv("PORT")));
-        }
-        
-        Database database = new Database("jdbc:sqlite:foorumi.db");
+        Database database = getDatabase();
         database.init();
 
         ViestiDao viestiDao = new ViestiDao(database);
         KeskusteluDao keskusteluDao = new KeskusteluDao(database, viestiDao);
         AlueDao alueDao = new AlueDao(database, keskusteluDao);
-        
-        staticFileLocation("/public");
-        
+       
         get("/", (req, res) -> {
             
             HashMap map = new HashMap<>();
@@ -64,11 +58,10 @@ public class Main {
             Alue uusiAlue = new Alue(nimi);
             int uudenId = alueDao.createOne(uusiAlue);
             
-            HashMap map = new HashMap<>();
-            map.put("alue", alueDao.findOne(uudenId));
-
-            return new ModelAndView(map, "alue");
-        }, new ThymeleafTemplateEngine());
+            res.redirect("/alueet/" + uudenId);
+            
+            return null;
+        });
         
         get("/keskustelut/:id", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -82,5 +75,26 @@ public class Main {
             
             return null;
         });
+    }
+    
+    public static void initialize() {
+         
+        // asetetaan portti jos heroku antaa PORT-ympäristömuuttujan
+        if (System.getenv("PORT") != null) {
+            port(Integer.valueOf(System.getenv("PORT")));
+        }
+        
+        // aseta sijainti css -tiedostoja varten
+        staticFileLocation("/public");
+    }
+    
+    public static Database getDatabase() throws ClassNotFoundException {
+          // käytetään oletuksena paikallista sqlite-tietokantaa
+        String jdbcOsoite = "jdbc:sqlite:foorumi.db";
+        // jos heroku antaa käyttöömme tietokantaosoitteen, otetaan se käyttöön
+        if (System.getenv("DATABASE_URL") != null) {
+            jdbcOsoite = System.getenv("DATABASE_URL");
+        } 
+        return new Database(jdbcOsoite);
     }
 }
