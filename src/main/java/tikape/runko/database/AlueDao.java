@@ -71,6 +71,7 @@ public class AlueDao implements Dao<Alue, Integer> {
         "ORDER BY a.nimi ASC");
 
         ResultSet rs = stmt.executeQuery();
+        
         List<Alue> alueet = new ArrayList<>();
         while (rs.next()) {
             Integer id = rs.getInt("id");
@@ -101,7 +102,10 @@ public class AlueDao implements Dao<Alue, Integer> {
     
         stmt.execute();
                 
-        int id = stmt.getGeneratedKeys().getInt(1);
+        ResultSet rs = stmt.getGeneratedKeys();
+        rs.next();
+        
+        int id = rs.getInt(1);
         
         stmt.close();
         connection.close();
