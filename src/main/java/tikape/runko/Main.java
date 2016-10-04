@@ -15,6 +15,12 @@ import tikape.runko.domain.Alue;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        
+         // asetetaan portti jos heroku antaa PORT-ympäristömuuttujan
+        if (System.getenv("PORT") != null) {
+            port(Integer.valueOf(System.getenv("PORT")));
+        }
+        
         Database database = new Database("jdbc:sqlite:foorumi.db");
         database.init();
 
