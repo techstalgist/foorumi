@@ -112,10 +112,10 @@ public class Database {
                     "id SERIAL PRIMARY KEY NOT NULL,\n" +
                     "nimi varchar(200) NOT NULL\n" +
                     ");");
-        lista.add("INSERT INTO Alue VALUES(1,'Lemmikit');");
-        lista.add("INSERT INTO Alue VALUES(2,'Lentokoneet');");
-        lista.add("INSERT INTO Alue VALUES(3,'Ohjelmointi');");
-        lista.add("INSERT INTO Alue VALUES(4,'Elokuvat');");
+        lista.add("INSERT INTO Alue (nimi) VALUES('Lemmikit');");
+        lista.add("INSERT INTO Alue (nimi) VALUES('Lentokoneet');");
+        lista.add("INSERT INTO Alue (nimi) VALUES('Ohjelmointi');");
+        lista.add("INSERT INTO Alue (nimi) VALUES('Elokuvat');");
 
         lista.add("CREATE TABLE Keskustelu\n" +
                     "(\n" +
@@ -125,10 +125,10 @@ public class Database {
                     "FOREIGN KEY(alue_id) REFERENCES Alue(id)\n" +
                     ");");
       
-        lista.add("INSERT INTO Keskustelu VALUES(1,'Java on jees',3);");       
-        lista.add("INSERT INTO Keskustelu VALUES(2,'Python on jeesimpi',3);");       
-        lista.add("INSERT INTO Keskustelu VALUES(3,'Koirat on jees',1);");       
-        lista.add("INSERT INTO Keskustelu VALUES(4,'Kissaton jees',1);"); 
+        lista.add("INSERT INTO Keskustelu (nimi,alue_id) VALUES('Java on jees',3);");       
+        lista.add("INSERT INTO Keskustelu (nimi,alue_id) VALUES('Python on jeesimpi',3);");       
+        lista.add("INSERT INTO Keskustelu (nimi,alue_id) VALUES('Koirat on jees',1);");       
+        lista.add("INSERT INTO Keskustelu (nimi,alue_id) VALUES('Kissat on jees',1);"); 
         
         
         lista.add("CREATE TABLE Viesti\n" +"(\n" +
@@ -140,10 +140,10 @@ public class Database {
                     "FOREIGN KEY(keskustelu_id) REFERENCES Keskustelu(id)\n" +
                     ");");
 
-        lista.add("INSERT INTO Viesti VALUES(1,'foo','Mikko',1,1474298815);");      
-        lista.add("INSERT INTO Viesti VALUES(2,'bar','Santeri',1,1474298842);");
-        lista.add("INSERT INTO Viesti VALUES(3,'baz','Antti',1,1474298865);");
-        lista.add("INSERT INTO Viesti VALUES(4,'foo','Antti',3,1474299043);");
+        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('foo','Mikko',1,1474298815);");      
+        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('bar','Santeri',1,1474298842);");
+        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('baz','Antti',1,1474298865);");
+        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('foo','Antti',3,1474299043);");
         
         return lista;
     }
