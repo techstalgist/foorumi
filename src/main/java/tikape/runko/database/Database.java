@@ -137,7 +137,7 @@ public class Database {
                     "sisalto varchar(10000) NOT NULL,\n" +
                     "lahettaja varchar(100) NOT NULL,\n" +
                     "keskustelu_id integer NOT NULL,\n" +
-                    "aikaleima integer NOT NULL,\n" +
+                    "aikaleima bigint NOT NULL,\n" +
                     "FOREIGN KEY(keskustelu_id) REFERENCES Keskustelu(id)\n" +
                     ");");
 

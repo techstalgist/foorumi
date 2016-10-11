@@ -90,11 +90,6 @@ public class Main {
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
         
-        get("/stop", (req, res) -> {
-            stop();
-            
-            return null;
-        });
     }
     
     public static void initialize() {
