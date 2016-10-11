@@ -44,7 +44,7 @@ public class AlueDao implements Dao<Alue, Integer> {
         String nimi = rs.getString("nimi");
 
         Alue a = new Alue(id, nimi);
-        a.setKeskustelut(keskusteluDao.findForSection(id));
+        a.setKeskustelut(keskusteluDao.findForSection(a));
         rs.close();
         stmt.close();
         connection.close();

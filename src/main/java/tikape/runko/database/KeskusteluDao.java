@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import tikape.runko.domain.Alue;
 import tikape.runko.domain.Keskustelu;
 
 
@@ -43,11 +44,12 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
 
         Integer id = rs.getInt("id");
         String nimi = rs.getString("nimi");
-        Integer alue_id = rs.getInt("alue_id");
-        String alueen_nimi = rs.getString("alueen_nimi");
-
-        Keskustelu k = new Keskustelu(id, nimi, alue_id, alueen_nimi);
-        k.setViestit(viestiDao.findForConversation(id));
+        Integer alueId = rs.getInt("alue_id");
+        String alueenNimi = rs.getString("alueen_nimi");
+        
+        Alue a = new Alue(alueId, alueenNimi);
+        Keskustelu k = new Keskustelu(id, nimi, a);
+        k.setViestit(viestiDao.findForConversation(k));
         rs.close();
         stmt.close();
         connection.close();
@@ -67,9 +69,10 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String nimi = rs.getString("nimi");
-            Integer alue_id = rs.getInt("alue_id");
+            Integer alueId = rs.getInt("alue_id");
             String alueenNimi = rs.getString("alueen_nimi");
-            Keskustelu k = new Keskustelu(id, nimi, alue_id, alueenNimi);
+            Alue a = new Alue(alueId, alueenNimi);
+            Keskustelu k = new Keskustelu(id, nimi, a);
             keskustelut.add(k);
         }
 
@@ -81,7 +84,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     }
     
     
-    public List<Keskustelu> findForSection(Integer alue) throws SQLException {
+    public List<Keskustelu> findForSection(Alue a) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT \n" +
         "k.id, \n" +
@@ -98,7 +101,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
         "GROUP BY k.id\n" +
         "ORDER BY viimeisin DESC\n" +
         "LIMIT 10;");
-        stmt.setObject(1, alue);
+        stmt.setObject(1, a.getId());
         
         ResultSet rs = stmt.executeQuery();
         List<Keskustelu> keskustelut = new ArrayList<>();
@@ -107,7 +110,7 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
             String nimi = rs.getString("nimi");
             Integer viestienLukumaara = rs.getInt("lkm");
             Integer viimeisin = rs.getInt("viimeisin");
-            Keskustelu k = new Keskustelu(id, nimi, viestienLukumaara, viimeisin);
+            Keskustelu k = new Keskustelu(id, nimi, a, viestienLukumaara, viimeisin);
             keskustelut.add(k);
         }
 

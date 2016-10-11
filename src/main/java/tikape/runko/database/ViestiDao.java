@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import tikape.runko.domain.Keskustelu;
 import tikape.runko.domain.Viesti;
 
 public class ViestiDao implements Dao<Viesti, Integer> {
@@ -36,10 +37,9 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         Integer id = rs.getInt("id");
         String sisalto = rs.getString("sisalto");
         String lahettaja = rs.getString("lahettaja");
-        Integer keskustelu_id = rs.getInt("keskustelu_id");
         Integer aikaleima = rs.getInt("aikaleima");
 
-        Viesti o = new Viesti(id, sisalto, lahettaja, keskustelu_id, aikaleima);
+        Viesti o = new Viesti(id, sisalto, lahettaja, aikaleima);
 
         rs.close();
         stmt.close();
@@ -60,10 +60,9 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             Integer id = rs.getInt("id");
             String sisalto = rs.getString("sisalto");
             String lahettaja = rs.getString("lahettaja");
-            Integer keskustelu_id = rs.getInt("keskustelu_id");
             Integer aikaleima = rs.getInt("aikaleima");
 
-            viestit.add(new Viesti(id, sisalto, lahettaja, keskustelu_id, aikaleima));
+            viestit.add(new Viesti(id, sisalto, lahettaja, aikaleima));
         }
 
         rs.close();
@@ -73,11 +72,11 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         return viestit;
     }
     
-    public List<Viesti> findForConversation(Integer conversation_id) throws SQLException {
+    public List<Viesti> findForConversation(Keskustelu k) throws SQLException {
 
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE keskustelu_id = ?");
-        stmt.setObject(1, conversation_id);
+        stmt.setObject(1, k.getId());
 
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new ArrayList<>();
@@ -85,10 +84,9 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             Integer id = rs.getInt("id");
             String sisalto = rs.getString("sisalto");
             String lahettaja = rs.getString("lahettaja");
-            Integer keskustelu_id = rs.getInt("keskustelu_id");
             Integer aikaleima = rs.getInt("aikaleima");
 
-            viestit.add(new Viesti(id, sisalto, lahettaja, keskustelu_id, aikaleima));
+            viestit.add(new Viesti(id, sisalto, lahettaja, k, aikaleima));
         }
 
         rs.close();

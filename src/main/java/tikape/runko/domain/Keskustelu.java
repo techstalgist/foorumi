@@ -13,25 +13,30 @@ public class Keskustelu {
     
     private Integer id;
     private String nimi;
-    private Integer alueID;
-    private String alueenNimi;
+    private Alue alue;
+    private Date viimeisin;
     private List<Viesti> viestit;
     private Integer viestienLukumaara;
-    private Date viimeisin;
     
-    public Keskustelu(Integer id, String nimi, Integer alueID, String alueenNimi) {
+    public Keskustelu(Integer id, String nimi, Alue alue, Integer viestienLukumaara, Integer viimeisin) {
         this.id = id;
         this.nimi = nimi;
-        this.alueID = alueID;
-        this.alueenNimi = alueenNimi;
+        this.alue = alue;
+        if (viimeisin != null) {
+            this.viimeisin = new Date(viimeisin*1000L);
+        }
         this.viestit = new ArrayList<>();
+        if (viestienLukumaara != null) {
+            this.viestienLukumaara = viestienLukumaara;
+        }
     }
     
     public Keskustelu(Integer id, String nimi, Integer viestienLukumaara, Integer viimeisin) {
-        this.id = id;
-        this.nimi = nimi;
-        this.viestienLukumaara = viestienLukumaara;
-        this.viimeisin = new Date(viimeisin*1000L);
+        this(id, nimi, null, viestienLukumaara, viimeisin);
+    }
+    
+    public Keskustelu(Integer id, String nimi, Alue alue) {
+        this(id, nimi, alue, null, null);
     }
     
     public void setViestit(List<Viesti> viestit) {
@@ -59,8 +64,8 @@ public class Keskustelu {
         return nimi;
     }
     
-    public Integer getAlueID() {
-        return alueID;
+    public Alue getAlue() {
+        return alue;
     }
     
     public Integer getViestienLukumaara() {
@@ -71,8 +76,5 @@ public class Keskustelu {
         return viimeisin;
     }
     
-    public String getAlueenNimi() {
-        return alueenNimi;
-    }
     
 }

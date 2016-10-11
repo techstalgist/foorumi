@@ -20,20 +20,21 @@ public class Alue {
     public Alue(Integer id, String nimi, Integer viestienLukumaara, Integer viimeisin) {
         this.id = id;
         this.nimi = nimi;
-        this.viestienLukumaara = viestienLukumaara;
-        if (viimeisin > 0) {
+        if (viestienLukumaara != null) {
+            this.viestienLukumaara = viestienLukumaara;
+        }
+        if (viimeisin != null && viimeisin > 0) {
             this.viimeisin = new Date(viimeisin*1000L);
         }
-    }
-    
-    public Alue(Integer id, String nimi) {
-        this.id = id;
-        this.nimi = nimi;
         this.keskustelut = new ArrayList<>();
     }
     
+    public Alue(Integer id, String nimi) {
+        this(id, nimi, null, null);
+    }
+    
     public Alue(String nimi) {
-        this.nimi = nimi;
+        this(null, nimi, null, null);
     }
     
     public void setKeskustelut(List<Keskustelu> keskustelut) {
