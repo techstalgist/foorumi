@@ -9,6 +9,8 @@ import tikape.runko.database.Database;
 import tikape.runko.database.KeskusteluDao;
 import tikape.runko.database.ViestiDao;
 import tikape.runko.domain.Alue;
+import tikape.runko.domain.Keskustelu;
+import tikape.runko.domain.Viesti;
 
 
 public class Main {
@@ -59,6 +61,24 @@ public class Main {
             int uudenId = alueDao.createOne(uusiAlue);
             
             res.redirect("/alueet/" + uudenId);
+            
+            return null;
+        });
+        
+        post("/keskustelut/:id", (req, res) -> {
+            
+            String sisalto = req.queryParams("sisalto");
+            String lahettaja = req.queryParams("lahettaja");
+            int keskusteluId = Integer.parseInt(req.params("id"));
+            if (sisalto.length()== 0 || lahettaja.length() == 0) {
+                res.redirect("keskustelut/" + keskusteluId);
+            }
+          
+            Keskustelu keskustelu = keskusteluDao.findOne(keskusteluId);
+            Viesti viesti = new Viesti(sisalto, lahettaja, keskustelu);
+            viestiDao.createOne(viesti);
+            
+            res.redirect("/keskustelut/" + keskusteluId);
             
             return null;
         });

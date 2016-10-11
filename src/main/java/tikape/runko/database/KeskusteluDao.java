@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Alue;
 import tikape.runko.domain.Keskustelu;
+import tikape.runko.domain.Utils;
 
 
 /**
@@ -109,8 +110,8 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
             Integer id = rs.getInt("id");
             String nimi = rs.getString("nimi");
             Integer viestienLukumaara = rs.getInt("lkm");
-            Integer viimeisin = rs.getInt("viimeisin");
-            Keskustelu k = new Keskustelu(id, nimi, a, viestienLukumaara, viimeisin);
+            Long viimeisin = rs.getLong("viimeisin");
+            Keskustelu k = new Keskustelu(id, nimi, a, viestienLukumaara, Utils.getDateFromLong(viimeisin));
             keskustelut.add(k);
         }
 

@@ -12,18 +12,22 @@ public class Viesti {
     private Integer viestinNumero;
 
     public Viesti(Integer id, String sisalto, String lahettaja, 
-                  Keskustelu keskustelu, Integer aikaleima) {
+                  Keskustelu keskustelu, Date aikaleima) {
         this.id = id;
         this.sisalto = sisalto;
         this.lahettaja = lahettaja;
         this.keskustelu = keskustelu;
-        this.aikaleima = new Date(aikaleima*1000L);
+        this.aikaleima = aikaleima;
         this.viestinNumero = 0;
     }
     
     public Viesti(Integer id, String sisalto, String lahettaja, 
-                  Integer aikaleima) {
+                  Date aikaleima) {
         this(id, sisalto, lahettaja, null, aikaleima);
+    }
+    
+    public Viesti(String sisalto, String lahettaja, Keskustelu keskustelu) {
+        this(null, sisalto, lahettaja, keskustelu, new Date());
     }
 
     public Integer getId() {

@@ -18,12 +18,12 @@ public class Keskustelu {
     private List<Viesti> viestit;
     private Integer viestienLukumaara;
     
-    public Keskustelu(Integer id, String nimi, Alue alue, Integer viestienLukumaara, Integer viimeisin) {
+    public Keskustelu(Integer id, String nimi, Alue alue, Integer viestienLukumaara, Date viimeisin) {
         this.id = id;
         this.nimi = nimi;
         this.alue = alue;
         if (viimeisin != null) {
-            this.viimeisin = new Date(viimeisin*1000L);
+            this.viimeisin = viimeisin;
         }
         this.viestit = new ArrayList<>();
         if (viestienLukumaara != null) {
@@ -31,7 +31,7 @@ public class Keskustelu {
         }
     }
     
-    public Keskustelu(Integer id, String nimi, Integer viestienLukumaara, Integer viimeisin) {
+    public Keskustelu(Integer id, String nimi, Integer viestienLukumaara, Date viimeisin) {
         this(id, nimi, null, viestienLukumaara, viimeisin);
     }
     

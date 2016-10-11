@@ -17,14 +17,14 @@ public class Alue {
     private Date viimeisin;
     private List<Keskustelu> keskustelut;
     
-    public Alue(Integer id, String nimi, Integer viestienLukumaara, Integer viimeisin) {
+    public Alue(Integer id, String nimi, Integer viestienLukumaara, Date viimeisin) {
         this.id = id;
         this.nimi = nimi;
         if (viestienLukumaara != null) {
             this.viestienLukumaara = viestienLukumaara;
         }
-        if (viimeisin != null && viimeisin > 0) {
-            this.viimeisin = new Date(viimeisin*1000L);
+        if (viimeisin != null && viimeisin.getTime() > 0) {
+            this.viimeisin = viimeisin;
         }
         this.keskustelut = new ArrayList<>();
     }

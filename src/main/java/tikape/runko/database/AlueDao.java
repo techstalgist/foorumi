@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Alue;
+import tikape.runko.domain.Utils;
 
 /**
  *
@@ -77,8 +78,8 @@ public class AlueDao implements Dao<Alue, Integer> {
             Integer id = rs.getInt("id");
             String nimi = rs.getString("nimi");
             Integer viestienLukumaara = rs.getInt("lkm");
-            Integer viimeisin = rs.getInt("viimeisin");
-            alueet.add(new Alue(id, nimi, viestienLukumaara, viimeisin));
+            Long viimeisin = rs.getLong("viimeisin");
+            alueet.add(new Alue(id, nimi, viestienLukumaara, Utils.getDateFromLong(viimeisin)));
         }
 
         rs.close();

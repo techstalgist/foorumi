@@ -94,11 +94,12 @@ public class Database {
                     "FOREIGN KEY(keskustelu_id) REFERENCES Keskustelu(id)\n" +
                     ");");
 
-        lista.add("INSERT INTO Viesti VALUES(1,'foo','Mikko',1,1474298815);");      
-        lista.add("INSERT INTO Viesti VALUES(2,'bar','Santeri',1,1474298842);");
-        lista.add("INSERT INTO Viesti VALUES(3,'baz','Antti',1,1474298865);");
-        lista.add("INSERT INTO Viesti VALUES(4,'foo','Antti',3,1474299043);");
+        lista.add("INSERT INTO Viesti VALUES(1,'foo','Mikko',1,1476198936663);");      
+        lista.add("INSERT INTO Viesti VALUES(2,'bar','Santeri',1,1476198937663);");
+        lista.add("INSERT INTO Viesti VALUES(3,'baz','Antti',1,1476198938663);");
+        lista.add("INSERT INTO Viesti VALUES(4,'foo','Antti',3,1476198939663);");
         
+       
         
         return lista;
     }
@@ -140,10 +141,10 @@ public class Database {
                     "FOREIGN KEY(keskustelu_id) REFERENCES Keskustelu(id)\n" +
                     ");");
 
-        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('foo','Mikko',1,1474298815);");      
-        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('bar','Santeri',1,1474298842);");
-        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('baz','Antti',1,1474298865);");
-        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('foo','Antti',3,1474299043);");
+        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('foo','Mikko',1,1476198936663);");      
+        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('bar','Santeri',1,1476198937663);");
+        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('baz','Antti',1,1476198938663);");
+        lista.add("INSERT INTO Viesti (sisalto,lahettaja,keskustelu_id,aikaleima) VALUES('foo','Antti',3,1476198939663);");
         
         return lista;
     }

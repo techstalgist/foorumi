@@ -9,10 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Keskustelu;
 import tikape.runko.domain.Viesti;
+import tikape.runko.domain.Utils;
 
 public class ViestiDao implements Dao<Viesti, Integer> {
 
@@ -37,9 +39,9 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         Integer id = rs.getInt("id");
         String sisalto = rs.getString("sisalto");
         String lahettaja = rs.getString("lahettaja");
-        Integer aikaleima = rs.getInt("aikaleima");
+        Long aikaleima = rs.getLong("aikaleima");
 
-        Viesti o = new Viesti(id, sisalto, lahettaja, aikaleima);
+        Viesti o = new Viesti(id, sisalto, lahettaja, Utils.getDateFromLong(aikaleima));
 
         rs.close();
         stmt.close();
@@ -60,9 +62,9 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             Integer id = rs.getInt("id");
             String sisalto = rs.getString("sisalto");
             String lahettaja = rs.getString("lahettaja");
-            Integer aikaleima = rs.getInt("aikaleima");
+            Long aikaleima = rs.getLong("aikaleima");
 
-            viestit.add(new Viesti(id, sisalto, lahettaja, aikaleima));
+            viestit.add(new Viesti(id, sisalto, lahettaja, Utils.getDateFromLong(aikaleima)));
         }
 
         rs.close();
@@ -84,9 +86,9 @@ public class ViestiDao implements Dao<Viesti, Integer> {
             Integer id = rs.getInt("id");
             String sisalto = rs.getString("sisalto");
             String lahettaja = rs.getString("lahettaja");
-            Integer aikaleima = rs.getInt("aikaleima");
+            Long aikaleima = rs.getLong("aikaleima");
 
-            viestit.add(new Viesti(id, sisalto, lahettaja, k, aikaleima));
+            viestit.add(new Viesti(id, sisalto, lahettaja, k, Utils.getDateFromLong(aikaleima)));
         }
 
         rs.close();
@@ -104,8 +106,27 @@ public class ViestiDao implements Dao<Viesti, Integer> {
     }
 
     @Override
-    public Integer createOne(Viesti obj) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Integer createOne(Viesti viesti) throws SQLException {
+        Connection connection = database.getConnection();
+   
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Viesti (sisalto, lahettaja, keskustelu_id, aikaleima) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        stmt.setObject(1, viesti.getSisalto());
+        stmt.setObject(2, viesti.getLahettaja());
+        stmt.setObject(3, viesti.getKeskustelu().getId());
+        stmt.setObject(4, Utils.getLongFromDate(viesti.getAikaleima()));
+    
+        stmt.execute();
+                
+        ResultSet rs = stmt.getGeneratedKeys();
+        rs.next();
+        int id = rs.getInt(1); 
+   
+        stmt.close();
+        connection.close();
+        
+        return id;
     }
+    
+    
 
 }
