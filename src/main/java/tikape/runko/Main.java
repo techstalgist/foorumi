@@ -67,7 +67,7 @@ public class Main {
         
         get("/alueet/:id/uusikeskustelu", (req, res) -> {
             HashMap map = new HashMap<>();
-            
+            map.put("alue",  alueDao.findOne(Integer.parseInt(req.params("id"))));
             return new ModelAndView(map, "uusiKeskustelu");
         }, new ThymeleafTemplateEngine());
 
