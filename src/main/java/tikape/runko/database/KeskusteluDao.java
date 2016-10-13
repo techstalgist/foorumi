@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import tikape.runko.domain.Alue;
@@ -127,8 +128,23 @@ public class KeskusteluDao implements Dao<Keskustelu, Integer> {
     }
 
     @Override
-    public Integer createOne(Keskustelu obj) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Integer createOne(Keskustelu keskustelu) throws SQLException {
+        Connection connection = database.getConnection();
+   
+        PreparedStatement stmt = connection.prepareStatement("INSERT INTO Keskustelu (nimi, alue_id) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+        stmt.setObject(1, keskustelu.getNimi());
+        stmt.setObject(2, keskustelu.getAlue().getId());
+    
+        stmt.execute();
+                
+        ResultSet rs = stmt.getGeneratedKeys();
+        rs.next();
+        int id = rs.getInt(1); 
+   
+        stmt.close();
+        connection.close();
+        
+        return id;
     }
     
 }

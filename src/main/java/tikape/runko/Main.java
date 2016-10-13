@@ -65,6 +65,42 @@ public class Main {
             return null;
         });
         
+        get("/alueet/:id/uusikeskustelu", (req, res) -> {
+            HashMap map = new HashMap<>();
+            
+            return new ModelAndView(map, "uusiKeskustelu");
+        }, new ThymeleafTemplateEngine());
+
+               
+        post("/alueet/:id/uusikeskustelu", (req, res) -> {
+            
+            Alue alue = alueDao.findOne(Integer.parseInt(req.params("id")));
+            String keskustelunNimi = req.queryParams("nimi");
+            String viestinSisalto = req.queryParams("sisalto");
+            String lahettaja = req.queryParams("lahettaja");
+            
+            if (keskustelunNimi.length()== 0 || viestinSisalto.length() == 0 ||
+                    lahettaja.length() == 0) {
+                // Ei luoda uutta keskustelua, jos joku puuttuu
+                HashMap map = new HashMap<>();
+                return new ModelAndView(map, "uusiKeskustelu");
+            }
+           
+            // Luo keskustelu
+            Keskustelu uusiKeskustelu = new Keskustelu(null, keskustelunNimi, alue);
+            int uudenKeskustelunId = keskusteluDao.createOne(uusiKeskustelu);
+            uusiKeskustelu = keskusteluDao.findOne(uudenKeskustelunId);
+            
+            // Luo viesti
+            Viesti uusiViesti = new Viesti(viestinSisalto, lahettaja, uusiKeskustelu);
+            int uudenViestinId = viestiDao.createOne(uusiViesti);
+            
+            
+            res.redirect("/keskustelut/" + uudenKeskustelunId);
+            
+            return null;
+        });
+        
         post("/keskustelut/:id", (req, res) -> {
             
             String sisalto = req.queryParams("sisalto");

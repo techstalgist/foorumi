@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Uusi keskustelu</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="../../styles.css" />
+        <link rel="stylesheet" href="../../bootstrap.min.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="row page-header">
+                <div class="col-md-12">
+                  <h1>
+                     Luo uusi keskustelu
+                 </h1>  
+                </div>
+          </div>
+            <div class="row margin">
+                <div class="col-md-2">
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                  <form action="uusikeskustelu" method="POST">
+                    <div class="form-group">
+                      <label for="nimi">Keskustelun nimi:</label>
+                      <input type="text" class="form-control" id="nimi" name="nimi"/>
+                      <label for="nimi">Aloitusviesti:</label>
+                      <textarea class="form-control" rows="5" id="sisalto" name="sisalto"></textarea>
+                      <label for="nimi">Lähettäjä:</label>
+                      <input type="text" class="form-control" id="lahettaja" name="lahettaja"/>
+                    </div>
+                   
+                    <button type="submit" class="btn btn-default">Luo uusi keskustelu</button>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
