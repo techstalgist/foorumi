@@ -53,8 +53,8 @@ public class Main {
             String nimi = req.queryParams("nimi");
             
             if (nimi.length()== 0) {
-                HashMap map = new HashMap<>();
-                return new ModelAndView(map, "uusiAlue");
+                res.redirect("/uusialue");
+                return null;
             }
           
             Alue uusiAlue = new Alue(nimi);
@@ -82,8 +82,8 @@ public class Main {
             if (keskustelunNimi.length()== 0 || viestinSisalto.length() == 0 ||
                     lahettaja.length() == 0) {
                 // Ei luoda uutta keskustelua, jos joku puuttuu
-                HashMap map = new HashMap<>();
-                return new ModelAndView(map, "uusiKeskustelu");
+                res.redirect("/alueet/" + alue.getId() + "/uusikeskustelu");
+                return null;
             }
            
             // Luo keskustelu
@@ -107,7 +107,8 @@ public class Main {
             String lahettaja = req.queryParams("lahettaja");
             int keskusteluId = Integer.parseInt(req.params("id"));
             if (sisalto.length()== 0 || lahettaja.length() == 0) {
-                res.redirect("keskustelut/" + keskusteluId);
+                res.redirect("/keskustelut/" + keskusteluId);
+                return null;
             }
           
             Keskustelu keskustelu = keskusteluDao.findOne(keskusteluId);
