@@ -18,7 +18,8 @@ and open the template in the editor.
             <div class="row page-header">
                <div class="col-md-12">
                  <h1>
-                    Aihe: <span th:text="${keskustelu.nimi}"></span>
+                    Alue: 
+                    <span th:text="${keskustelu.alue.nimi + ' → ' + keskustelu.nimi}"></span>
                 </h1>  
                </div>
            </div>
