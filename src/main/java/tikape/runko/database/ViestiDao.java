@@ -74,11 +74,12 @@ public class ViestiDao implements Dao<Viesti, Integer> {
         return viestit;
     }
     
-    public List<Viesti> findForConversation(Keskustelu k) throws SQLException {
+    public List<Viesti> findForConversation(Keskustelu k, Integer sivu) throws SQLException {
 
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE keskustelu_id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE keskustelu_id = ? LIMIT 10 OFFSET ?");
         stmt.setObject(1, k.getId());
+        stmt.setObject(2, (sivu-1)*10);
 
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new ArrayList<>();

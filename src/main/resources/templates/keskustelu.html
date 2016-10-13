@@ -39,7 +39,7 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-md-12">
                       <table class="table">
-                        <tr th:each="viesti: ${keskustelu.viestit}">
+                        <tr th:each="viesti: ${keskustelu.getViestit(sivu)}">
                             <td>
                                 #<span th:text="${viesti.viestinNumero}"></span>
                             </td>
@@ -59,6 +59,16 @@ and open the template in the editor.
             </div>
             <div class="row margin">
                 <div class="col-md-6">
+                  <a th:href="@{~/keskustelut/{id}(sivu=${keskustelu.haeEdellinenSivu(sivu)},id=${keskustelu.id})}">
+                          Edellinen sivu
+                  </a> | 
+                  <a th:href="@{~/keskustelut/{id}(sivu=${keskustelu.haeSeuraavaSivu(sivu)},id=${keskustelu.id})}">
+                          Seuraava sivu
+                  </a>
+                </div>
+            </div>
+            <div class="row margin">
+                <div class="col-md-6">
                   <form method="POST">
                     <div class="form-group">
                          <label for="sisalto">Viesti:</label>
@@ -71,6 +81,7 @@ and open the template in the editor.
                   </form>
                 </div>
             </div>
+          
         </div>
        
     </body>

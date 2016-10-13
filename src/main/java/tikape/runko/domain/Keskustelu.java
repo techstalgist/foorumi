@@ -43,8 +43,9 @@ public class Keskustelu {
         this.viestit = viestit;
     }
 
-    public List<Viesti> getViestit () {
-        int nro = 1;
+    public List<Viesti> getViestit (int sivu) {
+        // jos sivu on 1, aloitetaan numerointi yhdestä. sivulla 2 numerointi alkaa yhdestätoista.
+        int nro = (sivu-1)*10+1;
         for(Viesti viesti : viestit) {
             viesti.setViestinNumero(nro);
             nro++;
@@ -75,6 +76,23 @@ public class Keskustelu {
     public Date getViimeisin() {
         return viimeisin;
     }
+    
+    public int haeEdellinenSivu(int sivu) {
+        if(sivu-1 == 0) {
+            return sivu;
+        } else {
+            return sivu - 1;
+        }
+    }
+    
+    public int haeSeuraavaSivu(int sivu) {
+        if(getViestit(sivu).size() < 10) {
+            return sivu;
+        } else {
+            return sivu + 1;
+        }
+    }
+    
     
     
 }

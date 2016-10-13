@@ -39,7 +39,8 @@ and open the template in the editor.
                         </tr>
                         <tr th:each="keskustelu: ${alue.keskustelut}">
                             <td>
-                                <a th:href="${'/keskustelut/' + keskustelu.id}">
+                                
+                                <a th:href="@{~/keskustelut/{id}(sivu=1,id=${keskustelu.id})}">
                                     <span th:text="${keskustelu.nimi}"></span>
                                 </a>
                            </td>

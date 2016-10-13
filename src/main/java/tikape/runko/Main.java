@@ -96,7 +96,7 @@ public class Main {
             int uudenViestinId = viestiDao.createOne(uusiViesti);
             
             
-            res.redirect("/keskustelut/" + uudenKeskustelunId);
+            res.redirect("/keskustelut/" + uudenKeskustelunId  + "?sivu=1");
             
             return null;
         });
@@ -115,15 +115,18 @@ public class Main {
             Viesti viesti = new Viesti(sisalto, lahettaja, keskustelu);
             viestiDao.createOne(viesti);
             
-            res.redirect("/keskustelut/" + keskusteluId);
+            int sivu = Integer.parseInt(req.queryParams("sivu"));
+            res.redirect("/keskustelut/" + keskusteluId + "?sivu=" + sivu);
             
             return null;
         });
         
         get("/keskustelut/:id", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("keskustelu", keskusteluDao.findOne(Integer.parseInt(req.params("id"))));
-
+            int id = Integer.parseInt(req.params("id"));
+            int sivu = Integer.parseInt(req.queryParams("sivu"));
+            map.put("keskustelu", keskusteluDao.findOneWithMessages(id, sivu));
+            map.put("sivu", sivu);
             return new ModelAndView(map, "keskustelu");
         }, new ThymeleafTemplateEngine());
         
